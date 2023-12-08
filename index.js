@@ -78,6 +78,29 @@ app.post('/register', async (req, res) => {
     res.sendStatus(200);
 })
 
+app.post('/checkUserExist', async(req, res) => {
+    const checkUsername = await User.findOne({ username: req.body.username });
+    if(checkUsername) res.sendStatus(200);
+    else res.sendStatus(404);
+})
+
+app.post('/signIn', async (req, res) => {
+    
+    let {username, password} = req.body;
+
+    username = username.replace(/\s+/g, " ").trim();
+    password = password.replace(/\s+/g, " ").trim();
+
+    const user = await User.findOne({ username: username });
+
+    const validPassword = await bcrypt.compare(password, user.pass);
+    if(validPassword){
+        const userId = user._id;
+        res.sendStatus(200);
+    } 
+    else res.sendStatus(404);
+})
+
 app.post("/getData", (req, res) => {
   console.log(req.body);
   res.sendStatus(200);
