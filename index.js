@@ -18,8 +18,8 @@ app.use(cors());
 
 mongoose
   .connect(process.env.MONGO_PROD_URL)
-  .then(() => console.log("connected db"))
-  .catch((err) => console.log(err));
+  // .then(() => console.log("connected db"))
+  // .catch((err) => console.log(err));
 
 let sessionId;
 
@@ -81,7 +81,7 @@ app.post("/register", async (req, res) => {
   const userId = user._id;
 
   res.cookie("userId", userId, { maxAge: 30 * 24 * 60 * 60 * 1000 });
-  console.log(req.cookies.userId);
+  // console.log(req.cookies.userId);
   sessionId = res.cookie.userId;
 
   //   res.sendStatus(200);
@@ -111,7 +111,7 @@ app.post("/signIn", async (req, res) => {
 });
 
 app.post("/getData", (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   res.sendStatus(200);
 });
 
@@ -120,5 +120,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(8080, (req, res) => {
-  console.log("Server is now open");
+  // console.log("Server is now open");
 });
